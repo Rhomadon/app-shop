@@ -16,7 +16,7 @@ const productSchema = Schema({
         default: 0
     },
 
-    image_url: String
+    image_url: String,
 
 }, { timestamps: true }) 
 

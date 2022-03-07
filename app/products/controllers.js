@@ -8,9 +8,9 @@ const store = async (req, res, next) => {
         let payload = req.body
         if(req.file) {
             let tmp_path = req.file.path
-            let originalExt = req.file.originalname.split('.')[req.file.originalname.split('.').length - 1]
+            let originalExt = req.file.originalname.split('.')[req.file.originalname.split('.').length-1]
             let filename = req.file.filename + '.' + originalExt
-            let target_path = path.resolve(config.rootPath, `public/image/products/${filename}`)
+            let target_path = path.resolve(config.rootPath, `public/images/products/${filename}`)
 
             const src = fs.createReadStream(tmp_path)
             const dest = fs.createWriteStream(target_path)
