@@ -23,7 +23,7 @@ app.use('/api', productRoutes)
 // Hero
 app.use('/', function(req, res) {
   res.render('index', {
-    title: 'Hero'
+    title: 'Heros'
   })
 })
 
