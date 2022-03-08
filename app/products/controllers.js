@@ -2,10 +2,35 @@ const path = require('path')
 const fs = require('fs')
 const config = require('../config')
 const Products = require('./models')
+const Categorys = require('../categorys/models')
+const Tags = require('../tags/models')
 
 const store = async (req, res, next) => {
     try {
         let payload = req.body
+        
+        // Relasi dengan Category
+        if(payload.category) {
+            let category = 
+            await Categorys.findOne({name: {$regex: payload.category, $options: 'i'}})
+            if(category) {
+                payload = {...payload, category: category._id}
+            } else {
+                delete payload.category
+            }
+        }
+
+        // Relasi dengan Tags
+        if(payload.tag && payload.tag.length > 0) {
+            let tag = 
+            await Tags.find({name: {$in: payload.tag}})
+            if(tag.length) {
+                payload = {...payload, tag: tag.map(tag => tag._id)}
+            } else {
+                delete payload.tag
+            }
+        }
+
         if(req.file) {
             let tmp_path = req.file.path
             let originalExt = req.file.originalname.split('.')[req.file.originalname.split('.').length-1]
@@ -57,6 +82,28 @@ const update = async (req, res, next) => {
     try {
         let payload = req.body
         let { id } = req.params
+
+        // Relasi dengan Category
+        if(payload.category) {
+            let category = 
+            await Categorys.findOne({name: {$regex: payload.category, $options: 'i'}})
+            if(category) {
+                payload = {...payload, category: category._id}
+            } else {
+                delete payload.category
+            }
+        }
+
+        // Relasi dengan Tags
+        if(payload.tag && payload.tag.length > 0) {
+            let tag = 
+            await Tags.find({name: {$in: payload.tag}})
+            if(tag.length) {
+                payload = {...payload, tag: tag.map(tag => tag._id)}
+            } else {
+                delete payload.tag
+            }
+        }
 
         if(req.file) {
             let tmp_path = req.file.path
@@ -117,11 +164,14 @@ const update = async (req, res, next) => {
 
 const index = async (req, res, next) => {
     try {
-        let { skip = 0, limit = 8 } = req.query
+        let { skip = 0, limit = 8, q = '', category = '', tag = [] } = req.query
+
         let product = await Products
         .find()
         .skip(parseInt(skip))
         .limit(parseInt(limit))
+        .populate('category')
+        .populate('tag')
         return res.json(product)
     } catch (err) {
         next(err)

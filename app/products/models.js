@@ -18,6 +18,16 @@ const productSchema = Schema({
 
     image_url: String,
 
+    category: {
+        type: Schema.Types.ObjectId,
+        ref:  'Categorys'
+    },
+
+    tag: {
+        type: Schema.Types.ObjectId,
+        ref:  'Tags'
+    }
+
 }, { timestamps: true }) 
 
 module.exports = model('Products', productSchema)
