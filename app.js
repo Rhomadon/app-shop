@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 const cors = require('cors')
 const productRoutes = require('./app/products/routers')
+const categoryRoutes = require('./app/categorys/routers')
 
 var app = express();
 
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/api', productRoutes)
+app.use('/api', categoryRoutes)
 // Hero
 app.use('/', function(req, res) {
   res.render('index', {
