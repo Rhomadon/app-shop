@@ -1,10 +1,10 @@
-const { getToken } = require("../../utils")
 const jwt = require('jsonwebtoken')
+const { getToken } = require('../../utils')
 const config = require('../config')
 const User = require('../user/models')
 
 function decodeToken() {
-    return async function (res, req, next) {
+    return async function (req, res, next) {
         try {
             let token = getToken(req)
 
@@ -33,6 +33,4 @@ function decodeToken() {
     }
 }
 
-module.exports = {
-    decodeToken
-}
+module.exports = { decodeToken }

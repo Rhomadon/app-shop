@@ -3,7 +3,7 @@ const bcrypt = require('bcrypt')
 const passport = require('passport')
 const jwt = require('jsonwebtoken')
 const config = require('../config')
-const { getToken } = require('../../utils')
+const { getToken } = require('../../utils/index')
 
 const register = async(req, res, next) => {
     try {
@@ -38,7 +38,7 @@ const localStrategy = async (email, password, done) => {
     done()
 }
 
-const login = (req, res, next) => {
+const login = async (req, res, next) => {
     passport.authenticate('local', async function(err, user) {
         if(err) return next(err)
 
@@ -54,6 +54,16 @@ const login = (req, res, next) => {
             token: signed
         })
     })(req, res, next)
+}
+
+const me = (req, res, next) => {
+    if(!req.user) {
+        res.json({
+            err: 1,
+            message: `you're not Login or token expired`
+        })
+    }
+    res.json(req.user)
 }
 
 const logout = async (req, res, next) => {
@@ -72,16 +82,6 @@ const logout = async (req, res, next) => {
         error: 0,
         message: 'Logout Berhasil'
     })
-}
-
-const me = (req, res, next) => {
-    if(!req.user) {
-        res.json({
-            err: 1,
-            message: `you're not Login or token expired`
-        })
-    }
-    res.json(req.user)
 }
 
 module.exports = {
