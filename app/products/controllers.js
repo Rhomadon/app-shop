@@ -188,8 +188,6 @@ const index = async (req, res, next) => {
             criteria = {...criteria, tag: {$in: tag.map(tag => tag._id)}} 
         }
 
-        console.log(criteria)
-
         let count = await Products.find().countDocuments()
         let product = await Products
         .find()

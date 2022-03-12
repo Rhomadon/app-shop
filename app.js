@@ -7,6 +7,8 @@ const cors = require('cors')
 const productRoutes = require('./app/products/routers')
 const categoryRoutes = require('./app/categorys/routers')
 const tagRoutes = require('./app/tags/routers')
+const authRoutes = require('./app/auth/routers')
+const { decodeToken }  = require('./app/middleware')
 
 var app = express();
 
@@ -14,13 +16,16 @@ var app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
+
 app.use(cors())
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(decodeToken())
 
+app.use('/auth', authRoutes)
 app.use('/api', productRoutes)
 app.use('/api', categoryRoutes)
 app.use('/api', tagRoutes)
