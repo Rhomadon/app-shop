@@ -29,8 +29,10 @@ const policies = {
         can('read', 'DeliveryAddress', {user_id: user._id})
     },
 
-    admin(user, {cam}) {
-        cam('manage', 'all')
+    admin(user, {can}) {
+        can('delete', 'Products'),
+        can('update', 'Products'),
+        can('create', 'Products')
     }
 }
 
