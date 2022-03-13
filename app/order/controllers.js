@@ -58,7 +58,7 @@ const store = async(req, res, next) => {
 
 const index = async (req, res, next) => {
     try {
-        let (skip = 0, limit = 10 = req.query)
+        let (skip = 0, limit = 10, req.query)
         let count = await Order.find({user: req.user._id}).countDocuments()
         let orders = await order.find({user: req.user._id})
         .skip(perseInt(skip))

@@ -11,6 +11,8 @@ const authRoutes = require('./app/auth/routers')
 const { decodeToken }  = require('./app/middleware')
 const deliveryAddressRoutes = require('./app/deliveryAddress/routers')
 const cartRoutes = require('./app/cart/routers')
+const orderRoutes = require('./app/order/routers')
+const invoiceRoutes = require('./app/invoice/routers')
 
 var app = express();
 
@@ -33,6 +35,8 @@ app.use('/api', categoryRoutes)
 app.use('/api', tagRoutes)
 app.use('/api', deliveryAddressRoutes)
 app.use('/api', cartRoutes)
+app.use('/api', orderRoutes)
+app.use('/api', invoiceRoutes)
 // Hero
 app.use('/', function(req, res) {
   res.render('index', {

@@ -26,4 +26,4 @@ const OrderItemSchema = Schema({
     },
 })
 
-module.exports = modal('OrderItem', OrderItemSchema)
+module.exports = model('OrderItem', OrderItemSchema)
