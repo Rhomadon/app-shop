@@ -30,6 +30,7 @@ const policies = {
     },
 
     admin(user, {can}) {
+        can('manage', 'All'),
         can('delete', 'Products'),
         can('update', 'Products'),
         can('create', 'Products')
